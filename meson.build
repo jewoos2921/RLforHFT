@@ -4,7 +4,26 @@ project('RLforHFT', 'cpp',
 
 
 eigen_dep = dependency('eigen3')
+git = find_program('git')
+cpp = meson.get_compiler('cpp')
+python3 = import('python').find_installation()
+fs = import('fs')
+ros_comm_dep = dependency('ros_comm', required : false)
 oepnmp_dep = dependency('openmp')
+
+if not ros_comm_dep.found()
+    # 디렉토리가 이미 존재하는지 확인
+    if not fs.exists('ros_comm')
+        clone_result = run_command(git, 'clone',
+                                   'https://github.com/ros/ros_comm.git',
+                                   check : false)
+
+        if clone_result.returncode() != 0
+            error('Failed to clone ros_comm repository')
+        endif
+    endif
+endif
+
 src = ['main.cpp']
 
 MLSrc = ['ML/main.cpp',
@@ -44,7 +63,7 @@ RLforHFT = executable('RLforHFT', src, install : true,
                       include_directories : [incdirML, incdirModelingDerivatives],
                       dependencies : [
                           eigen_dep,
-#                          ros_comm_dep,
+                          ros_comm_dep,
                           oepnmp_dep])
 
 test('test', RLforHFT)
