@@ -11,6 +11,10 @@ fs = import('fs')
 ros_comm_dep = dependency('ros_comm', required : false)
 oepnmp_dep = dependency('openmp')
 
+sdl_dep = dependency('sdl', fallback: ['sdl', 'sdl_dep'])
+
+
+
 if not ros_comm_dep.found()
     # 디렉토리가 이미 존재하는지 확인
     if not fs.exists('ros_comm')
@@ -41,11 +45,12 @@ MLSrc = ['ML/main.cpp',
          'ML/gru.cpp',
          'ML/cw_rnn.cpp',
          'ML/tile_coding.cpp',
-         'ML/sarsa.cpp', 'ML/epsilon_greedy.cpp',
+         'ML/sarsa.cpp', 'ML/epsilon_greedy.cpp', 'ML/flappy_simulator.cpp',
          'ML/ppo2.cpp']
 
 ModelingDerivativesSrc = ['Modeling Derivatives/main.cpp',
-                          'Modeling Derivatives/matrix.cpp']
+                          'Modeling Derivatives/matrix.cpp',
+]
 
 incdirML = include_directories('ML/include')
 incdirModelingDerivatives = include_directories('Modeling Derivatives/include')
@@ -64,6 +69,8 @@ RLforHFT = executable('RLforHFT', src, install : true,
                       dependencies : [
                           eigen_dep,
                           ros_comm_dep,
-                          oepnmp_dep])
+                          oepnmp_dep,
+                          sdl_dep
+                      ])
 
 test('test', RLforHFT)
