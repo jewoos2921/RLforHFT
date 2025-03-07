@@ -1,8 +1,8 @@
 from typing import Sequence, Callable, Tuple, TypeVar
-from src.func_approx.func_approx_base import FuncApproxBase
-from src.func_approx.dnn_spec import DNNSpec
+from func_approx_base import FuncApproxBase
+from dnn_spec import DNNSpec
 from scipy.stats import norm
-from src.func_approx.eligibility_traces import get_generalized_back_prop
+from eligibility_traces import get_generalized_back_prop
 import numpy as np
 
 X = TypeVar('X')
@@ -54,7 +54,7 @@ class DNN(FuncApproxBase):
         for this_params in self.params[:-1]:
             out = self.hidden_activation(np.dot(inp, this_params.T))
             inp = np.insert(out, 0, 1., axis=1)
-            outputs.append(out)
+            outputs.append(inp)
         outputs.append(self.output_activation(np.dot(inp, self.params[-1].T)))
         return outputs
 
@@ -83,7 +83,8 @@ class DNN(FuncApproxBase):
         back_prop = []
         for l in reversed(range(len(self.params))):
             back_prop.append(np.dot(deriv, layer_inputs[l]))
-            deriv = (np.dot(self.params[l].T, deriv) * self.hidden_activation_deriv(layer_inputs[l].T))[1:]
+            deriv = (np.dot(self.params[l].T, deriv) *
+                     self.hidden_activation_deriv(layer_inputs[l].T))[1:]
 
         return back_prop[::-1]
 
@@ -102,15 +103,7 @@ class DNN(FuncApproxBase):
 
     def get_sum_objective_gradient(self, x_vals_seq: Sequence[X],
                                    dObj_dOL: np.ndarray) -> Sequence[np.ndarray]:
-        """
-        :param x_vals_seq: list of n data points (x points)
-        :param dObj_dOL: 1-D array of length n representing the derivative
-                of the objective function with respect to the output of the DNN
-        :return: list (of length L+1) of |O_l| x (|I_l| + 1) 2-D array,
-                 i.e., same as the type of self.params
-                This function computes the gradient (with respect to w) of
-                g(w) = \sum_i Obj(f(x_i; w))
-        """
+
         fwd_prop = self.get_forward_prop(x_vals_seq)
         return self.get_back_prop(fwd_prop, dObj_dOL)
 
@@ -160,3 +153,25 @@ class DNN(FuncApproxBase):
             hidden_activation_deriv=self.hidden_activation_deriv,
             output_activation_deriv=self.output_activation_deriv
         )
+
+
+if __name__ == '__main__':
+    this_dnn_obj = DNNSpec(
+        neurons=[2],
+        hidden_activation=DNNSpec.relu,
+        hidden_activation_deriv=DNNSpec.relu_deriv,
+        output_activation=DNNSpec.identity,
+        output_activation_deriv=DNNSpec.identity_deriv,
+    )
+    nn = DNN(
+        feature_funcs=FuncApproxBase.get_identity_feature_funcs(3),
+        dnn_obj=this_dnn_obj,
+        reglr_coeff=0.,
+        learning_rate=1.,
+        adam=True,
+        adam_decay1=0.9,
+        adam_decay2=0.999,
+        add_unit_feature=True
+    )
+    init_eval = nn.get_func_eval((2.0, 3.0, -4.0))
+    print(init_eval)

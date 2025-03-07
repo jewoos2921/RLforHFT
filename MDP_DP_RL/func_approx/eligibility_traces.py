@@ -15,7 +15,8 @@ def get_generalized_back_prop(dnn_params: Sequence[np.ndarray],
                               factors: np.ndarray,
                               decay_param: float,
                               hidden_activation_deriv: Callable[[np.ndarray], np.ndarray],
-                              output_activation_deriv: Callable[[np.ndarray], np.ndarray]) -> Sequence[np.ndarray]:
+                              output_activation_deriv: Callable[[np.ndarray], np.ndarray]
+                              ) -> Sequence[np.ndarray]:
     output = fwd_prop[-1][:, 0]
     layer_inputs = fwd_prop[:-1]
 

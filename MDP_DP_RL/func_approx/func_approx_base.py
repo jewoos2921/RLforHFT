@@ -16,8 +16,8 @@ class FuncApproxBase(ABC):
                  adam_decay2: float,
                  add_unit_feature: bool = True
                  ):
-        self.feature_funcs: Sequence[Callable[[X], float]] = ([
-                                                                  FuncApproxBase.get_unit_func] if add_unit_feature else []) + feature_funcs
+        self.feature_funcs: Sequence[Callable[[X], float]] = \
+            ([FuncApproxBase.get_unit_func] if add_unit_feature else []) + feature_funcs
         self.num_features = len(self.feature_funcs)
         self.reglr_coeff = reglr_coeff
         self.learning_rate = learning_rate
@@ -26,7 +26,7 @@ class FuncApproxBase(ABC):
         self.adam_decay2 = adam_decay2
         self.time = 0
         self.params: List[np.ndarray] = self.init_params()
-        self.adam_caches = Tuple[List[np.ndarray], List[np.ndarray]] = self.init_adam_caches()
+        self.adam_caches : Tuple[List[np.ndarray], List[np.ndarray]] = self.init_adam_caches()
 
     @staticmethod
     def get_unit_func(_: X) -> float:
@@ -78,10 +78,10 @@ class FuncApproxBase(ABC):
                                     gamma_lambda: float) -> Sequence[np.ndarray]:
         pass
 
-    def update_params(self,
-                      x_vals_seq: Sequence[X],
+    def update_params(self, x_vals_seq: Sequence[X],
                       supervisory_seq: Sequence[float]):
-        avg_loss_gradient = [g / len(x_vals_seq) for g in self.get_sum_loss_gradient(x_vals_seq, supervisory_seq)]
+        avg_loss_gradient = [g / len(x_vals_seq)
+                             for g in self.get_sum_loss_gradient(x_vals_seq, supervisory_seq)]
         self.update_params_from_gradient(avg_loss_gradient)
 
     def update_params_from_gradient(self, gradient: Sequence[np.ndarray]):
@@ -89,8 +89,10 @@ class FuncApproxBase(ABC):
         for l in range(len(self.params)):
             g = gradient[l] + self.reglr_coeff * self.params[l]
             if self.adam:
-                self.adam_caches[0][l] = self.adam_decay1 * self.adam_caches[0][l] + (1 - self.adam_decay1) * g
-                self.adam_caches[1][l] = self.adam_decay2 * self.adam_caches[1][l] + (1 - self.adam_decay2) * g ** 2
+                self.adam_caches[0][l] = \
+                    self.adam_decay1 * self.adam_caches[0][l] + (1 - self.adam_decay1) * g
+                self.adam_caches[1][l] = \
+                    self.adam_decay2 * self.adam_caches[1][l] + (1 - self.adam_decay2) * g ** 2
 
                 self.params[l] -= self.learning_rate * self.adam_caches[0][l] / (
                         np.sqrt(self.adam_caches[1][l]) + very_small_pos) * np.sqrt(

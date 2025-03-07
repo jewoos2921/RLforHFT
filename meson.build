@@ -11,7 +11,7 @@ fs = import('fs')
 ros_comm_dep = dependency('ros_comm', required : false)
 oepnmp_dep = dependency('openmp')
 
-sdl_dep = dependency('sdl', fallback: ['sdl', 'sdl_dep'])
+sdl_dep = dependency('sdl', fallback : ['sdl', 'sdl_dep'])
 
 
 
@@ -29,6 +29,8 @@ if not ros_comm_dep.found()
 endif
 
 src = ['main.cpp']
+LLSrc = ['LowLatency/tcp_server.cpp',
+         'LowLatency/tcp_socket.cpp']
 
 MLSrc = ['ML/main.cpp',
          'ML/SimpleRL.cpp',
@@ -51,7 +53,7 @@ MLSrc = ['ML/main.cpp',
 ModelingDerivativesSrc = ['Modeling Derivatives/main.cpp',
                           'Modeling Derivatives/matrix.cpp',
 ]
-
+incdirLL = include_directories('LowLatency/include')
 incdirML = include_directories('ML/include')
 incdirModelingDerivatives = include_directories('Modeling Derivatives/include')
 
@@ -60,12 +62,14 @@ libraryModelingDerivatives = library('Modeling Derivatives',
                                      ModelingDerivativesSrc,
                                      include_directories : incdirModelingDerivatives)
 
+libraryLL = library('LowLatency', LLSrc, include_directories : incdirLL)
 
 RLforHFT = executable('RLforHFT', src, install : true,
                       link_with : [
                           libraryML,
-                          libraryModelingDerivatives],
-                      include_directories : [incdirML, incdirModelingDerivatives],
+                          libraryModelingDerivatives, libraryLL
+                      ],
+                      include_directories : [incdirML, incdirModelingDerivatives, incdirLL],
                       dependencies : [
                           eigen_dep,
                           ros_comm_dep,

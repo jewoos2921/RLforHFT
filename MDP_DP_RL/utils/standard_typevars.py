@@ -1,5 +1,5 @@
 from typing import Callable, Sequence, Mapping, Tuple, TypeVar
-from src.utils.generic_typevars import S, A
+from generic_typevars import S, A
 
 VFType = Callable[[S], float]
 QFType = Callable[[S], Callable[[A], float]]

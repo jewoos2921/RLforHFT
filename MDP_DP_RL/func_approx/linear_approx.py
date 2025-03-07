@@ -1,6 +1,6 @@
 from typing import Sequence, Callable, Tuple, TypeVar
-from src.func_approx.func_approx_base import FuncApproxBase
-from src.func_approx.eligibility_traces import get_decay_toeplitz_matrix
+from func_approx_base import FuncApproxBase
+from eligibility_traces import get_decay_toeplitz_matrix
 from scipy.stats import norm
 import numpy as np
 
@@ -26,7 +26,7 @@ class LinearApprox(FuncApproxBase):
     def init_adam_caches(self) -> Tuple[Sequence[np.ndarray], Sequence[np.ndarray]]:
         return [np.zeros(self.num_features)], [np.zeros(self.num_features)]
 
-    def get_func_eval(self, x_vals: X) :
+    def get_func_eval(self, x_vals: X):
         return np.dot(self.get_feature_vals(x_vals), self.params[0])
 
     def get_func_eval_pts(self, x_vals_seq: Sequence[X]) -> np.ndarray:

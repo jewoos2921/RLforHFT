@@ -34,8 +34,9 @@ class DNNSpec(NamedTuple):
 
     @staticmethod
     def sigmoid(arg: np.ndarray) -> np.ndarray:
-        return np.vectorize(lambda x: max(DNNSpec.SMALL_POS,
-                                          1. / (1. + max(DNNSpec.SMALL_POS, np.exp(-x)))))(arg)
+        return np.vectorize(
+            lambda x: max(DNNSpec.SMALL_POS,
+                          1. / (1. + max(DNNSpec.SMALL_POS, np.exp(-x)))))(arg)
 
     @staticmethod
     def sigmoid_deriv(res: np.ndarray) -> np.ndarray:

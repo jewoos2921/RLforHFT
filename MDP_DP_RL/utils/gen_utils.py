@@ -23,14 +23,16 @@ def memoize(func):
     return memoized_func
 
 
-def zip_dict_of_tuple(d: Mapping[X, Tuple[Y, Z]]) -> Tuple[Mapping[X, Y], Mapping[X, Z]]:
+def zip_dict_of_tuple(d: Mapping[X, Tuple[Y, Z]]) -> \
+        Tuple[Mapping[X, Y], Mapping[X, Z]]:
     d1 = {k: v1 for k, (v1, _) in d.items()}
     d2 = {k: v2 for k, (_, v2) in d.items()}
     return d1, d2
 
 
 def sum_dicts(dicts: Sequence[Mapping[X, float]]) -> Mapping[X, float]:
-    return {k: sum(d.get(k, 0) for d in dicts) for k in set.union(*[set(d1) for d1 in dicts])}
+    return {k: sum(d.get(k, 0) for d in dicts) \
+            for k in set.union(*[set(d1) for d1 in dicts])}
 
 
 def is_approx_eq(a: float, b: float) -> bool:
@@ -38,12 +40,18 @@ def is_approx_eq(a: float, b: float) -> bool:
 
 
 def transpose_dict_of_dicts(d: Mapping[X, Mapping[Y, Z]]) -> Mapping[Y, Mapping[X, Z]]:
-    """ Returns the transpose dictionary of dictionaries.
+    """
+    Returns the transpose dictionary of dictionaries.
     Works on irregularly shaped (non-rectangular) dicts of dicts
     """
     all_y = set(y for _, di in d.items() for y, _ in di.items())
     return {y: {x: val for x, di in d.items()
                 for y1, val in di.items() if y1 == y} for y in all_y}
+
+
+def transpose_dict_of_lists(d: Mapping[X, Sequence[Y]]) -> Sequence[Mapping[X, Y]]:
+    max_len = max(len(lin) for _, lin in d.items())
+    return [{k: l[i] for k, l in d.items() if i < len(l)} for i in range(max_len)]
 
 
 def transpose_list_od_dicts(l: Sequence[Mapping[X, Y]]) -> Mapping[X, Sequence[Y]]:
