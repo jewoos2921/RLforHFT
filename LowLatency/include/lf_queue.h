@@ -10,7 +10,7 @@
 
 #include "macros.h"
 
-namespace LL {
+namespace LL::Common {
     template<class T>
     class LFQueue final {
     public:

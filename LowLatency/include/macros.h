@@ -6,7 +6,7 @@
 #include <cstring>
 #include <iostream>
 
-namespace LL {
+namespace LL::Common {
 #define LIKELY(x) __builtin_expect(!!(x), 1)
 #define UNLIKELY(x) __builtin_expect(!!(x), 0)
 

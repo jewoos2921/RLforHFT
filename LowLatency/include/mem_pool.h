@@ -3,3 +3,8 @@
 //
 
 #pragma once
+#include "macros.h"
+
+namespace LL::Common {
+
+}

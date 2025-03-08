@@ -30,7 +30,7 @@ endif
 
 src = ['main.cpp']
 LLSrc = ['LowLatency/tcp_server.cpp',
-         'LowLatency/tcp_socket.cpp']
+         'LowLatency/tcp_socket.cpp', 'LowLatency/mcast_socket.cpp']
 
 MLSrc = ['ML/main.cpp',
          'ML/SimpleRL.cpp',
