@@ -53,8 +53,8 @@ namespace LL::Exchange {
                     << "ticker: " << tickerIdToString(tickerId_)
                     << "oid: " << orderIdToString(orderId_)
                     << "side: " << sideToString(side_)
-                    << "price: " << priceToString(price_)
                     << "quantity: " << quantityToString(quantity_)
+                    << "price: " << priceToString(price_)
                     << "priority: " << priorityToString(priority_)
                     << "]";
             return ss.str();
