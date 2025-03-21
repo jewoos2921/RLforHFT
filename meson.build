@@ -27,10 +27,30 @@ if not ros_comm_dep.found()
         endif
     endif
 endif
+mlpack_dep = dependency('mlpack', required : false)
+
+
+
+# If not found as a system dependency, handle it manually
+if not mlpack_dep.found()
+    # You might need to specify include directories manually
+    mlpack_inc = include_directories('mlpack/include')
+
+    # And link against the library
+    mlpack_lib = compiler.find_library('mlpack', required : true)
+
+    # Combine them into a dependency object
+    mlpack_dep = declare_dependency(
+        include_directories : mlpack_inc,
+        dependencies : mlpack_lib
+    )
+endif
+
 
 src = ['main.cpp']
 LLSrc = ['LowLatency/tcp_server.cpp',
-         'LowLatency/tcp_socket.cpp', 'LowLatency/mcast_socket.cpp']
+         'LowLatency/tcp_socket.cpp', 'LowLatency/mcast_socket.cpp', 'LowLatency/me_order_book.cpp',
+         'LowLatency/exchange_main.cpp']
 
 MLSrc = ['ML/main.cpp',
          'ML/SimpleRL.cpp',
@@ -50,13 +70,17 @@ MLSrc = ['ML/main.cpp',
          'ML/sarsa.cpp', 'ML/epsilon_greedy.cpp', 'ML/flappy_simulator.cpp',
          'ML/ppo2.cpp']
 
+MLSrc2 = ['ML2/data_process.cpp']
+
 ModelingDerivativesSrc = ['Modeling Derivatives/main.cpp',
                           'Modeling Derivatives/matrix.cpp',
 ]
+#==================================================================================================
 incdirLL = include_directories('LowLatency/include')
 incdirML = include_directories('ML/include')
 incdirModelingDerivatives = include_directories('Modeling Derivatives/include')
-
+incdirML2 = include_directories('ML2/include')
+#==================================================================================================
 libraryML = library('ML', MLSrc, include_directories : incdirML)
 libraryModelingDerivatives = library('Modeling Derivatives',
                                      ModelingDerivativesSrc,
@@ -64,17 +88,19 @@ libraryModelingDerivatives = library('Modeling Derivatives',
 
 libraryLL = library('LowLatency', LLSrc, include_directories : incdirLL)
 
+libraryML2 = library('ML2', LLSrc, include_directories : incdirML2)
+#==================================================================================================
 RLforHFT = executable('RLforHFT', src, install : true,
                       link_with : [
                           libraryML,
-                          libraryModelingDerivatives, libraryLL
+                          libraryModelingDerivatives, libraryLL, libraryML2
                       ],
-                      include_directories : [incdirML, incdirModelingDerivatives, incdirLL],
+                      include_directories : [incdirML, incdirModelingDerivatives, incdirLL, incdirML2],
                       dependencies : [
                           eigen_dep,
                           ros_comm_dep,
                           oepnmp_dep,
-                          sdl_dep
+                          sdl_dep, mlpack_dep
                       ])
 
 test('test', RLforHFT)

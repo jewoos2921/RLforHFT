@@ -11,7 +11,7 @@
 #include "macros.h"
 
 namespace LL::Common {
-    template<class T>
+    template<typename T>
     class LFQueue final {
     public:
         LFQueue(size_t num_elems): store_(num_elems, T()) {

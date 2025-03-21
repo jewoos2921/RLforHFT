@@ -44,6 +44,7 @@ namespace LL::Common {
         } union_;
     };
 
+
     class Logger final {
     public:
         auto flushQueue() const {
@@ -114,7 +115,7 @@ namespace LL::Common {
             file_.open(file_name);
             ASSERT(file_.is_open(), "Could not open log file:" + file_name);
             logger_thread_ = createAndStartThread(-1, "Common/Logger " +
-                                                      file_name_, [this]() { flushqueue(); });
+                                                      file_name_, [this]() { flushQueue(); });
             ASSERT(logger_thread_ != nullptr, "Could not create logger thread");;
         }
 
@@ -227,6 +228,7 @@ namespace LL::Common {
     private:
         const std::string file_name_;
         std::ofstream file_;
+
         LFQueue<LogElement> queue_;
         std::atomic<bool> running_ = {true};
         std::thread *logger_thread_ = {nullptr};
