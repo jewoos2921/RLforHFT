@@ -1,0 +1,8 @@
+//
+// Created by jewoo on 2025-03-22.
+//
+
+#ifndef SNAPSHOT_SYNTHESIZER_H
+#define SNAPSHOT_SYNTHESIZER_H
+
+#endif //SNAPSHOT_SYNTHESIZER_H
