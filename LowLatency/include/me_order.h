@@ -67,7 +67,7 @@ namespace LL::Exchange {
 
             return ss.str();
         }
-
-        using OrdersAtPriceHashMap = std::array<MEOrdersAtPrice *, ME_MAX_PRICE_LEVELS>;
     };
+
+    using OrdersAtPriceHashMap = std::array<MEOrdersAtPrice *, ME_MAX_PRICE_LEVELS>;
 }

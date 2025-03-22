@@ -34,8 +34,8 @@ namespace LL::Exchange {
         ClientRequestType type_ = ClientRequestType::INVALID;
 
         ClientId client_id_ = ClientId_INVALID;
-        TickerId tickerId_ = TickerId_INVALID;
-        OrderId orderId_ = OrderId_INVALID;
+        TickerId ticker_id_ = TickerId_INVALID;
+        OrderId order_id_ = OrderId_INVALID;
         Side side_ = Side::INVALID;
         Price price_ = Price_INVALID;
         Quantity quantity_ = Quantity_INVALID;
@@ -46,8 +46,8 @@ namespace LL::Exchange {
                     << "["
                     << "type: " << clientRequestTypeToString(type_)
                     << "client: " << clientIdToString(client_id_)
-                    << "ticker: " << tickerIdToString(tickerId_)
-                    << "oid: " << orderIdToString(orderId_)
+                    << "ticker: " << tickerIdToString(ticker_id_)
+                    << "oid: " << orderIdToString(order_id_)
                     << "side: " << sideToString(side_)
                     << "qty: " << quantityToString(quantity_)
                     << "price: " << priceToString(price_)
