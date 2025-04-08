@@ -48,8 +48,8 @@ namespace LL::Exchange {
     struct MEMarketUpdate {
         MarketUpdateType type_ = MarketUpdateType::INVALID;
 
-        OrderId orderId_ = OrderId_INVALID;
-        TickerId tickerId_ = TickerId_INVALID;
+        OrderId order_id_ = OrderId_INVALID;
+        TickerId ticker_id_ = TickerId_INVALID;
         Side side_ = Side::INVALID;
         Price price_ = Price_INVALID;
         Quantity quantity_ = Quantity_INVALID;
@@ -60,8 +60,8 @@ namespace LL::Exchange {
             ss << "MEMarketUpdate"
                     << "["
                     << " type: " << marketUpdateTypeToString(type_)
-                    << "ticker: " << tickerIdToString(tickerId_)
-                    << "oid: " << orderIdToString(orderId_)
+                    << "ticker: " << tickerIdToString(ticker_id_)
+                    << "oid: " << orderIdToString(order_id_)
                     << "side: " << sideToString(side_)
                     << "quantity: " << quantityToString(quantity_)
                     << "price: " << priceToString(price_)

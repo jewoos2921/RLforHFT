@@ -51,7 +51,9 @@ src = ['main.cpp']
 LLSrc = ['LowLatency/tcp_server.cpp',
          'LowLatency/tcp_socket.cpp', 'LowLatency/mcast_socket.cpp', 'LowLatency/me_order_book.cpp',
          'LowLatency/exchange_main.cpp', 'LowLatency/matching_engine.cpp', 'LowLatency/me_order.cpp'
-         , 'LowLatency/order_server.cpp' , 'LowLatency/snapshot_synthesizer.cpp','LowLatency/market_data_publisher.cpp'
+         , 'LowLatency/order_server.cpp', 'LowLatency/snapshot_synthesizer.cpp', 'LowLatency/market_data_publisher.cpp',
+         'LowLatency/position_keeper.cpp', 'LowLatency/market_order_book.cpp', 'LowLatency/market_order.cpp'
+
 ]
 
 MLSrc = ['ML/main.cpp',

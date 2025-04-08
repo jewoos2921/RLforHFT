@@ -5,6 +5,9 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <string>
+
+#include "macros.h"
 
 namespace LL::Common {
     template<typename T>
@@ -37,6 +40,17 @@ namespace LL::Common {
         }
 
 
+        MemPool(const MemPool &) = delete;
+
+        MemPool(const MemPool &&) = delete;
+
+        MemPool &operator=(const MemPool &) = delete;
+
+        MemPool &operator=(const MemPool &&) = delete;
+
+        MemPool() = delete;
+
+    private:
         auto updatedNextFreeIndex() noexcept {
             const auto initial_free_index = next_free_index_;
             while (!store_[next_free_index_].is_free_) {
@@ -50,17 +64,6 @@ namespace LL::Common {
             }
         }
 
-        MemPool(const MemPool &) = delete;
-
-        MemPool(const MemPool &&) = delete;
-
-        MemPool &operator=(const MemPool &) = delete;
-
-        MemPool &operator=(const MemPool &&) = delete;
-
-        MemPool() = delete;
-
-    private:
         struct ObjectBlock {
             T object_;
             bool is_free_ = true;

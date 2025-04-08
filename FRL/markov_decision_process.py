@@ -18,7 +18,7 @@ S = TypeVar('S')
 @dataclass(frozen=True)
 class TransitionStep(Generic[S, A]):
     """
-    A Single step in the simulation of an MDP, containing:
+    A Single step in the simulation of an MDP.py, containing:
 
     state -- the state we start from
     action -- the action we took at that state
@@ -64,7 +64,7 @@ class MarkovDecisionProcess(ABC, Generic[S, A]):
     def simulate_actions(self,
                          start_states: Distribution[NonTerminal[S]],
                          policy: Policy[S, A]) -> Iterable[TransitionStep[S, A]]:
-        """Simulate this MDP with the given policy, yielding the sequence of (
+        """Simulate this MDP.py with the given policy, yielding the sequence of (
         state, action, next_state, reward) tuples encountered in the simulation trace.
         """
         state: State[S] = start_states.sample()

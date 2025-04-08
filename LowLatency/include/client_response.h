@@ -11,7 +11,6 @@
 using namespace LL::Common;
 
 namespace LL::Exchange {
-#pragma pack(push, 1)
     enum class ClientResponseType : uint8_t {
         INVALID = 0,
         ACCEPTED = 1,
@@ -35,7 +34,7 @@ namespace LL::Exchange {
         }
         return "UNKNOWN";
     }
-
+#pragma pack(push, 1)
     struct MEClientResponse {
         ClientResponseType type_ = ClientResponseType::INVALID;
         ClientId client_id_ = ClientId_INVALID;
@@ -51,17 +50,30 @@ namespace LL::Exchange {
         auto toString() const {
             std::stringstream ss;
             ss << "MEClientResponse"
-          << " ["
-          << "type:" << clientResponseTypeToString(type_)
-          << " client:" << clientIdToString(client_id_)
-          << " ticker:" << tickerIdToString(ticker_id_)
-          << " coid:" << orderIdToString(client_order_id_)
-          << " moid:" << orderIdToString(market_order_id_)
-          << " side:" << sideToString(side_)
-          << " exec_qty:" << quantityToString(exec_qty_)
-          << " leaves_qty:" << quantityToString(leaves_qty_)
-          << " price:" << priceToString(price_)
-          << "]";
+                    << " ["
+                    << "type:" << clientResponseTypeToString(type_)
+                    << " client:" << clientIdToString(client_id_)
+                    << " ticker:" << tickerIdToString(ticker_id_)
+                    << " coid:" << orderIdToString(client_order_id_)
+                    << " moid:" << orderIdToString(market_order_id_)
+                    << " side:" << sideToString(side_)
+                    << " exec_qty:" << quantityToString(exec_qty_)
+                    << " leaves_qty:" << quantityToString(leaves_qty_)
+                    << " price:" << priceToString(price_)
+                    << "]";
+            return ss.str();
+        }
+    };
+
+    struct OMClientResponse {
+        size_t seq_num_{0};
+        MEClientResponse me_client_response_;
+
+        auto toString() const {
+            std::stringstream ss;
+            ss << "OMClientResponse" << " ["
+                    << "seq: " << seq_num_ << " "
+                    << me_client_response_.toString() << "]";
             return ss.str();
         }
     };

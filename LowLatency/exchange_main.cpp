@@ -4,3 +4,4 @@
 #include "client_request.h"
 #include "client_response.h"
 #include "market_update.h"
+#include "fifo_sequencer.h"

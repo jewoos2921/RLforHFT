@@ -14,7 +14,7 @@ S = TypeVar('S')
 class Policy(ABC, Generic[S, A]):
     """
     A policy is a function that sepecifies what we should do (the action) at a
-    given state of our MDP.
+    given state of our MDP.py.
     """
 
     @abstractmethod

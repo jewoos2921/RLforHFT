@@ -57,6 +57,7 @@ namespace LL::Common {
                                 nullptr,
                                 0,
                                 NI_NUMERICHOST);
+                    break;
                 }
             }
             freeifaddrs(ifaddr);
@@ -66,9 +67,7 @@ namespace LL::Common {
 
     inline auto setNonBlocking(int fd) -> bool {
         const auto flags = fcntl(fd, F_GETFL, 0);
-        if (flags & O_NONBLOCK) {
-            return true;
-        }
+        if (flags & O_NONBLOCK) { return true; }
         return fcntl(fd, F_SETFL, flags | O_NONBLOCK) != -1;
     }
 

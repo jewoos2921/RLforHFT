@@ -70,7 +70,7 @@ def greedy_policy_from_vf(mdp: FiniteMarkovDecisionProcess[S, A],
 def policy_iteration(mdp: FiniteMarkovDecisionProcess[S, A],
                      gamma: float,
                      matrix_method_for_mrp_eval: bool = False) -> Iterator[Tuple[V[S], FinitePolicy[S, A]]]:
-    """Calculate the value function (V*) of the given MDP by improving
+    """Calculate the value function (V*) of the given MDP.py by improving
     the policy repeatedly after evaluating the value function for a policy
     """
 
@@ -106,7 +106,7 @@ def policy_iteration_result(
 
 def value_iteration(mdp: FiniteMarkovDecisionProcess[S, A],
                     gamma: float) -> Iterator[V[S]]:
-    """Calculate the value function (V*) of the given MDP by applying the
+    """Calculate the value function (V*) of the given MDP.py by applying the
         update function repeatedly until the values converge.
     """
 

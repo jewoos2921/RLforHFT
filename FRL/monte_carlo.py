@@ -69,9 +69,9 @@ def glie_mc_control(
         y: float,
         e_as_func_of_episodes: Callable[[int], float],
         episode_length_tolerance: float = 1e-6) -> Iterator[QValueFunctionApprox[S, A]]:
-    """Evaluate an MDP using the monte carlo method, simulating episodes of the given number of steps.
+    """Evaluate an MDP.py using the monte carlo method, simulating episodes of the given number of steps.
 
-    :param mdp: an MDP
+    :param mdp: an MDP.py
     :param states: distribution over non-terminal states
     :param approx_0: initial approximation of value function
     :param y: discount rate (0 < y < 1), default: 1

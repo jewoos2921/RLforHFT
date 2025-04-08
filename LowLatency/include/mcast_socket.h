@@ -5,6 +5,7 @@
 #pragma once
 
 #include <functional>
+
 #include "socket_utils.h"
 #include "logging.h"
 
@@ -33,6 +34,7 @@ namespace LL::Common {
         std::vector<char> inbound_data_;
         size_t next_send_valid_index_{0};
         size_t next_recv_valid_index_{0};
+
         int socket_fd_{-1};
         std::function<void(McastSocket *s)> recv_callback_{nullptr};
         Logger &logger_;

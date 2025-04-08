@@ -5,13 +5,13 @@
 #pragma once
 
 #include <sstream>
+
 #include "types.h"
 #include "lf_queue.h"
 
 using namespace LL::Common;
 
 namespace LL::Exchange {
-#pragma pack(push, 1)
     enum class ClientRequestType : uint8_t {
         INVALID = 0,
         NEW = 1,
@@ -29,7 +29,7 @@ namespace LL::Exchange {
         }
         return "UNKNOWN";
     }
-
+#pragma pack(push, 1)
     struct MEClientRequest {
         ClientRequestType type_ = ClientRequestType::INVALID;
 
@@ -52,6 +52,19 @@ namespace LL::Exchange {
                     << "qty: " << quantityToString(quantity_)
                     << "price: " << priceToString(price_)
                     << "]";
+            return ss.str();
+        }
+    };
+
+    struct OMClientRequest {
+        size_t seq_num_{0};
+        MEClientRequest me_client_request_;
+
+        auto toString() const {
+            std::stringstream ss;
+            ss << "OMClientRequest" << " ["
+                    << "seq: " << seq_num_ << " "
+                    << me_client_request_.toString() << "]";
             return ss.str();
         }
     };

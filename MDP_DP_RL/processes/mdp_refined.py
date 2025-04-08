@@ -149,12 +149,12 @@ if __name__ == '__main__':
     print(mrp_refined_obj.rewards_refined)
 
     print("-----------------")
-    print("This is MDP")
+    print("This is MDP.py")
     print("Rewards")
     print(mdp_refined_obj.rewards)
 
     print("-----------------")
-    print("This is MRP from MDP")
+    print("This is MRP from MDP.py")
     mrp_obj1 = mdp_refined_obj.get_mrp(pol_obj)
     print("Rewards")
     print(mrp_obj1.rewards)

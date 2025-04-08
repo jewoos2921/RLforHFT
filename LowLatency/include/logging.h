@@ -47,7 +47,7 @@ namespace LL::Common {
 
     class Logger final {
     public:
-        auto flushQueue() const {
+        auto flushQueue() noexcept {
             while (running_) {
                 for (auto next = queue_.getNextToRead();
                      queue_.size() && next; next = queue_.getNextToRead()) {
